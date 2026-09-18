@@ -19,7 +19,6 @@ const script = `
   const submittingLabel = ${JSON.stringify(contactForm.submittingLabel)};
   const formError = ${JSON.stringify(contactForm.formError)};
   const successMessage = ${JSON.stringify(contactForm.successMessage)};
-  const isSimple = ${JSON.stringify(!false)};
   const web3formsEndpoint = ${JSON.stringify(contactForm.web3forms.endpoint)};
   const web3formsAccessKey = ${JSON.stringify(contactForm.web3forms.accessKey)};
 
@@ -28,23 +27,14 @@ const script = `
     return field ? field.value : "";
   };
 
-  const baseValidators = {
+  const validators = {
     name: (value) => (value.trim().length < 2 ? errors.name : ""),
     email: (value) => {
       const trimmed = value.trim();
       return /^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$/.test(trimmed) ? "" : errors.email;
     },
     phone: (value) => (value.trim().length < 6 ? errors.phone : ""),
-    service: (value) => (value ? "" : errors.service),
   };
-
-  const fullValidators = {
-    ...baseValidators,
-    message: (value) => (value.trim().length < 10 ? errors.message : ""),
-  };
-
-  const simpleMode = form.dataset.simple === "true";
-  const validators = simpleMode ? baseValidators : fullValidators;
 
   const setError = (name, message) => {
     const field = form.elements.namedItem(name);
@@ -135,7 +125,6 @@ const script = `
   id="contact-form"
   class="grid gap-8"
   novalidate
-  data-simple={simple ? "true" : "false"}
 >
   <div class="grid gap-6 md:grid-cols-2">
     <div class="flex flex-col gap-2">
@@ -218,12 +207,11 @@ const script = `
         for="cf-service"
         class="text-xs font-semibold uppercase tracking-[0.2em] text-green"
       >
-        {contactForm.labels.service} <span aria-hidden="true">*</span>
+        {contactForm.labels.service}
       </label>
       <select
         id="cf-service"
         name="service"
-        required
         class="w-full rounded-md border border-green bg-cream px-4 py-3 text-sm text-green focus:outline-none"
       >
         <option value="" disabled selected>
@@ -242,13 +230,12 @@ const script = `
           for="cf-message"
           class="text-xs font-semibold uppercase tracking-[0.2em] text-green"
         >
-          {contactForm.labels.message} <span aria-hidden="true">*</span>
+          {contactForm.labels.message}
         </label>
         <textarea
           id="cf-message"
           name="message"
           rows="5"
-          required
           placeholder={contactForm.placeholders.message}
           class="w-full resize-y rounded-md border border-green bg-cream px-4 py-3 text-sm text-green placeholder:text-green/50 focus:outline-none"
         ></textarea>

@@ -21,17 +21,16 @@ export const site = {
   name: "misure",
   url: "[PENDIENTE: dominio de producción]",
   announcement:
-    "Desarrollo de software a medida en Rosario y alrededores — Prototipo gratis antes de contratar",
+    "Desarrollo de software a medida en Rosario y alrededores. Prototipo gratis antes de contratar.",
   menuLabel: "Menú",
-  metaTitle: "misure — Software a medida para que tu empresa funcione mejor",
+  metaTitle: "misure | Software a medida para pymes de Rosario y alrededores",
   metaDescription:
-    "misure diseña y desarrolla sistemas de gestión, herramientas de ventas y páginas web 100% a medida para pymes de Rosario y alrededores. Prototipo gratis antes de firmar.",
-  tagline: "Software a medida para que tu empresa funcione mejor.",
+    "misure desarrolla sistemas de gestión, CRM y páginas web a medida para pymes de Rosario y alrededores. Prototipo gratis antes de firmar.",
+  tagline: "Software a medida para pymes de Rosario y el cordón industrial.",
 };
 
 export const footer = {
   navTitle: "Navegación",
-  servicesTitle: "Servicios",
   contactTitle: "Contacto",
   ctaLabel: "Contanos tu caso",
   tagline: "Desarrollado por misure",
@@ -51,23 +50,23 @@ export const headerCta: Cta = {
 export const pages = {
   home: { title: site.metaTitle, description: site.metaDescription },
   nosotros: {
-    title: "Nosotros — misure",
+    title: "Nosotros | misure",
     description:
-      "Conocé a las personas detrás de misure: desarrollo de sistemas de gestión, herramientas de ventas y páginas web 100% a medida para pymes de Rosario y alrededores.",
+      "Conocé al equipo detrás de misure: sistemas de gestión, ventas y páginas web a medida para pymes de Rosario y alrededores.",
     h1: "Nosotros",
     intro:
-      "Conocé a las personas que desarrollan el software a medida de misure: sistemas de gestión, herramientas de ventas y páginas web.",
+      "Somos dos socios de Rosario que se cansaron de ver pymes pagando de más por sistemas genéricos que no resuelven nada. Así nació misure.",
   },
   proyectos: {
-    title: "Proyectos — misure",
+    title: "Proyectos | misure",
     description:
-      "Casos de éxito de misure: sistemas de gestión, herramientas de ventas y páginas web 100% a medida para pymes de Rosario. Resultados reales, no promesas.",
+      "Casos de éxito de misure: sistemas de gestión, ventas y páginas web a medida para pymes de Rosario. Resultados reales, no promesas.",
     h1: "Proyectos",
     intro:
       "Resultados reales de software a medida para pymes: sistemas de gestión, herramientas de ventas y páginas web.",
   },
   contacto: {
-    title: "Contacto — misure",
+    title: "Contacto | misure",
     description:
       "Contanos en qué etapa está tu negocio y te mostramos cómo un sistema a medida puede resolver tu problema. Prototipo gratis, sin compromiso.",
     h1: "Hablemos",
@@ -80,7 +79,7 @@ export const clients = {
   eyebrow: "Validación social",
   title: "No prometemos resultados. Los mostramos.",
   description:
-    "Un sistema de gestión a medida para una empresa de limpieza de Rosario eliminó un puesto administrativo completo y llevó las quejas por inasistencias de 4-6 por mes a prácticamente 0.",
+    "Un sistema de gestión a medida corre hoy en más de 30 sucursales de una empresa de limpieza en Rosario. Eliminó un puesto administrativo completo y llevó las quejas por inasistencias de 4-6 por mes a prácticamente 0.",
   metrics: [
     {
       value: "$2.800.000",
@@ -113,21 +112,21 @@ export const explore = {
     {
       title: "Prototipo gratis antes de firmar",
       description:
-        "Antes de comprometerte con nada, te entregamos el diseño y el prototipo de tu sistema sin cargo. Cero riesgo para arrancar.",
+        "Te mostramos paso a paso cómo trabajamos, desde la primera visita hasta la entrega. Sin sorpresas.",
       href: "/nosotros",
       cta: "Cómo trabajamos",
     },
     {
       title: "Un caso real documentado",
       description:
-        "Empresa de limpieza, Rosario: un sistema que reemplazó tres planillas de Excel y eliminó un puesto administrativo completo.",
+        "El desafío, las decisiones técnicas y los números completos del sistema que armamos para una empresa de limpieza en Rosario.",
       href: "/proyectos/empresa-limpieza-rosario",
       cta: "Ver el caso",
     },
     {
       title: "Precios sin letra chica",
       description:
-        "Landing desde USD 200. ERP/CRM desde USD 1.000. E-commerce desde USD 1.500. Sin sorpresas ni suscripciones de por vida.",
+        "Cuánto cuesta cada tipo de proyecto y cómo armamos el presupuesto final.",
       href: "#pregunta-costo-mio",
       cta: "Ver preguntas frecuentes",
     },
@@ -149,11 +148,11 @@ export const about: {
 };
 
 export const hero = {
-  title: "Automatizá lo que hoy le cuesta un sueldo completo a tu empresa.",
+  title: "El sistema que reemplaza un sueldo completo.",
   lead:
-    "Diseñamos y desarrollamos sistemas de gestión, ventas y páginas web 100% a medida, sin SaaS genérico ni plantillas. Vamos a tu negocio, armamos un prototipo y diseño gratis antes de firmar, y trabajamos con entregas semanales por contrato.",
-  ctaPrimary: { label: "Agendá 20 minutos con nosotros", href: "/contacto#contacto" },
-  ctaSecondary: { label: "Ver casos de éxito", href: "/proyectos#portfolio" },
+    "Diseñamos y desarrollamos sistemas de gestión, ventas y páginas web 100% a medida. Entendemos el problema completo de tu negocio antes de proponerte una solución.",
+  ctaPrimary: { label: "Quiero mi prototipo gratis", href: "/contacto#contacto" },
+  ctaSecondary: { label: "Ver el caso de éxito", href: "/proyectos#portfolio" },
 } satisfies {
   title: string;
   lead: string;
@@ -260,8 +259,8 @@ export const team: {
   members: [
     {
       name: "[COMPLETAR: nombre]",
-      role: "[COMPLETAR: rol — ej: Desarrollo]",
-      description: "[COMPLETAR: frase personal — ej: Me obsesiona que el cliente entienda el sistema sin manual de instrucciones]",
+      role: "[COMPLETAR: rol, ej: Desarrollo]",
+      description: "[COMPLETAR: frase personal, ej: Me obsesiona que el cliente entienda el sistema sin manual de instrucciones]",
       socials: {
         linkedin: "[COMPLETAR: link LinkedIn]",
         github: "[COMPLETAR: link GitHub]",
@@ -269,8 +268,8 @@ export const team: {
     },
     {
       name: "[COMPLETAR: nombre]",
-      role: "[COMPLETAR: rol — ej: Desarrollo y Negocio]",
-      description: "[COMPLETAR: frase personal — ej: Prefiero una demo en el negocio del cliente que diez reuniones por Zoom]",
+      role: "[COMPLETAR: rol, ej: Desarrollo y Negocio]",
+      description: "[COMPLETAR: frase personal, ej: Prefiero una demo en el negocio del cliente que diez reuniones por Zoom]",
       socials: {
         linkedin: "[COMPLETAR: link LinkedIn]",
         github: "[COMPLETAR: link GitHub]",
@@ -319,7 +318,7 @@ export const nosotrosCta: {
   label: string;
   href: string;
 } = {
-  eyebrow: "¿Te interesa trabajar con nosotros?",
+  eyebrow: "¿Trabajamos juntos?",
   title: "Agendá 20 minutos y te mostramos cómo funciona.",
   label: "Quiero mi prototipo gratis",
   href: "/contacto#contacto",
@@ -350,7 +349,7 @@ export const portfolio: {
   items: [
     {
       project: "Sistema de gestión para empresa de limpieza",
-      client: "Empresa de limpieza — Rosario",
+      client: "Empresa de limpieza · Rosario",
       category: "erp",
       technologies: ["Node.js", "TypeScript", "PostgreSQL", "QR", "Geolocalización"],
       description:
@@ -400,9 +399,9 @@ export const faq: FaqItem[] = [
       "Para el seguimiento de clientes y oportunidades: que ninguna venta se pierda en el camino y que el equipo trabaje con la misma información.",
   },
   {
-    question: "¿Qué es una página web de conversión y para qué sirve?",
+    question: "¿Qué es una página web de conversión?",
     answer:
-      "Una página enfocada en un solo objetivo: convertir visitas en consultas o ventas, con diseño propio y carga rápida. Se combina con las herramientas de ventas para capturar y seguir los contactos que llegan.",
+      "Una página enfocada en un solo objetivo: convertir visitas en consultas o ventas, con diseño propio y carga rápida. Sirve para captar los contactos que después seguís con tu CRM.",
   },
   {
     question: "¿Cuánto cuesta un proyecto como el mío?",
@@ -412,12 +411,12 @@ export const faq: FaqItem[] = [
   {
     question: "¿Qué pasa después del lanzamiento?",
     answer:
-      "El software no termina cuando se publica. Si hay errores después del lanzamiento, los arreglamos gratis. Y seguimos disponibles para soporte, mantenimiento y mejoras.",
+      "Seguimos disponibles para soporte y mejoras. Si encontramos un error, te avisamos antes de que lo notes; si lo encontrás vos, nos escribís y lo resolvemos sin cargo.",
   },
   {
     question: "¿Cómo sé que van a cumplir el plazo si son una empresa nueva?",
     answer:
-      "Las entregas semanales y la fecha de lanzamiento quedan escritas en el contrato. No dependemos de promesas verbales. Podés leer las condiciones antes de firmar y, si algo se desvía, está contemplado en el acuerdo.",
+      "No dependés de nuestra palabra: la fecha de lanzamiento y el cronograma de entregas semanales quedan en el contrato antes de arrancar. Cada semana ves el avance real, no un resumen armado para la ocasión.",
   },
 ];
 
@@ -447,10 +446,9 @@ export const forWho: ForWhoSection = {
 
 export const contact: ContactInfo = {
   eyebrow: "Contacto",
-  title: "¿Listo para digitalizar tu empresa?",
+  title: "Contanos tu caso.",
   description:
-    "Contanos en qué etapa está tu negocio y te contamos cómo podemos ayudarte. Sin vueltas y sin compromiso.",
-  ctaLabel: "Iniciar proyecto",
+    "Dejanos tus datos y coordinamos una charla de 20 minutos para entender tu negocio.",
   email: "contacto@misure.dev",
   locationItems: [
     { label: "UBICACIÓN", value: "Rosario, Santa Fe" },
@@ -472,7 +470,7 @@ export const contact: ContactInfo = {
 
 export const stickyCta = {
   ariaLabel: "Acción rápida",
-  label: "Contanos tu proyecto",
+  label: "Quiero mi prototipo gratis",
   href: "/contacto#contacto",
 };
 
@@ -511,7 +509,7 @@ export const contactForm = {
     service: "Elegí un servicio",
     message: "Contanos un poco más (mínimo 10 caracteres)",
   },
-  submitLabel: "Enviar",
+  submitLabel: "Enviar mi consulta",
   submittingLabel: "Enviando...",
   successMessage:
     "Gracias, recibimos tu mensaje. Te contactamos a la brevedad.",
@@ -529,9 +527,9 @@ export const caseStudies = {
     slug: "empresa-limpieza-rosario",
     seo: {
       title:
-        "Sistema de gestión para empresa de limpieza — misure | Rosario",
+        "Sistema de gestión para empresa de limpieza en Rosario | misure",
       description:
-        "Eliminamos un puesto administrativo completo y llevamos las quejas por inasistencias de 4-6 por mes a 0. Sistema a medida con geolocalización, cálculo de sueldos y stock por edificio.",
+        "Eliminamos un puesto administrativo completo y bajamos las quejas por inasistencias a 0, con un sistema de geolocalización y sueldos automáticos.",
     },
     eyebrow: "Caso de éxito",
     title: "Sistema de gestión para empresa de limpieza",
@@ -547,7 +545,7 @@ export const caseStudies = {
     ],
     problem: {
       eyebrow: "El desafío",
-      title: "Tres planillas, WhatsApp y un puesto administrativo al límite",
+      title: "El control manual llegó a su límite.",
       body: [
         "La empresa manejaba la asistencia de su personal en múltiples edificios con planillas de Excel compartidas por WhatsApp. Cada fin de mes, el área administrativa tardaba varios días en cruzar datos de asistencia, calcular sueldos y liquidar impuestos.",
         "Las quejas por inasistencias llegaban a 4-6 por mes sin que hubiera forma de verificarlas en tiempo real. El personal de supervisión no tenía visibilidad de qué empleado estaba en qué edificio, y el stock de insumos por edificio se registraba a mano.",
@@ -556,7 +554,7 @@ export const caseStudies = {
     },
     solution: {
       eyebrow: "La solución",
-      title: "Un sistema construido alrededor del proceso real de la empresa",
+      title: "Cómo lo resolvimos.",
       features: [
         {
           title: "Asistencia por geolocalización y QR",
@@ -598,6 +596,11 @@ export const caseStudies = {
           value: "1",
           unit: "persona",
           label: "supervisa hoy lo que antes requería 3, con mayor visibilidad y en tiempo real",
+        },
+        {
+          value: "30+",
+          unit: "sucursales",
+          label: "usando el sistema activamente hoy",
         },
       ],
     },

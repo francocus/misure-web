@@ -44,7 +44,6 @@ export type ContactInfo = {
   eyebrow: string;
   title: string;
   description: string;
-  ctaLabel: string;
   email: string;
   locationItems: { label: string; value: string }[];
   socials: { label: string; url: string; displayLabel?: string }[];

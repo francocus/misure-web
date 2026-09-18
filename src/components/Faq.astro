@@ -53,15 +53,15 @@ const faqSchema = {
 </section>
 
 <script>
-  const openFaqFromHash = (hash) => {
+  const openFaqFromHash = (hash: string) => {
     if (!hash) return;
-    const details = document.getElementById(hash.slice(1));
+    const details = document.getElementById(hash.slice(1)) as HTMLDetailsElement | null;
     if (details && details.tagName === "DETAILS") {
       details.open = true;
     }
   };
-  const onFaqLinkClick = (event) => {
-    const link = event.currentTarget;
+  const onFaqLinkClick = (event: Event) => {
+    const link = event.currentTarget as HTMLAnchorElement | null;
     if (!link) return;
     const href = link.getAttribute("href") || "";
     const hashIndex = href.indexOf("#");

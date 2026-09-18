@@ -109,8 +109,8 @@ gtag('config', '${gaId}');`
       initReveal();
     </script>
     <script>
-      const onCtaClick = (event) => {
-        const link = event.currentTarget;
+      const onCtaClick = (event: Event) => {
+        const link = event.currentTarget as HTMLAnchorElement | null;
         if (!link) return;
         const href = link.getAttribute("href") || "";
         const hashIndex = href.indexOf("#");
