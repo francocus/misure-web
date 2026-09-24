@@ -2,7 +2,6 @@
 import { contact, isPending } from "../lib/content";
 import ContactForm from "./ContactForm.astro";
 import InstagramIcon from "./ui/InstagramIcon.astro";
-import LaptopIcon from "./ui/LaptopIcon.astro";
 import LinkedinIcon from "./ui/LinkedinIcon.astro";
 import MailIcon from "./ui/MailIcon.astro";
 import PinIcon from "./ui/PinIcon.astro";
@@ -94,11 +93,7 @@ const emailHref = isPending(contact.email) ? null : `mailto:${contact.email}`;
           ))}
           {contact.locationItems.map((item) => (
             <li class="group flex items-center gap-3">
-              {item.label.includes("UBI") ? (
-                <PinIcon class="social-icon h-5 w-5 shrink-0 text-cream" />
-              ) : (
-                <LaptopIcon class="social-icon h-5 w-5 shrink-0 text-cream" />
-              )}
+              <PinIcon class="social-icon h-5 w-5 shrink-0 text-cream" />
               <span>{item.value}</span>
             </li>
           ))}

@@ -5,6 +5,7 @@ import InstagramIcon from "./ui/InstagramIcon.astro";
 import LinkedinIcon from "./ui/LinkedinIcon.astro";
 import MailIcon from "./ui/MailIcon.astro";
 import MisureWord from "./ui/MisureWord.astro";
+import PinIcon from "./ui/PinIcon.astro";
 
 const year = new Date().getFullYear();
 ---
@@ -89,11 +90,7 @@ const year = new Date().getFullYear();
         )}
         {contact.locationItems.map((item) => (
           <span class="group flex w-fit items-center gap-3 text-green">
-            {item.label.includes("UBI") ? (
-              <PinIcon class="social-icon h-5 w-5 shrink-0 text-green/75" />
-            ) : (
-              <LaptopIcon class="social-icon h-5 w-5 shrink-0 text-green/75" />
-            )}
+            <PinIcon class="social-icon h-5 w-5 shrink-0 text-green/75" />
             <span>{item.value}</span>
           </span>
         ))}

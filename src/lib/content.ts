@@ -619,14 +619,7 @@ export const contact: ContactInfo = {
   description:
     "Dejanos tus datos y coordinamos una charla de 20 minutos para entender tu negocio.",
   email: "contacto@misure.dev",
-  locationItems: [
-    { label: "UBICACIÓN", value: "Rosario, Santa Fe" },
-    {
-      label: "MODALIDAD",
-      value:
-        "Entrevistas presenciales en Rosario y alrededores. A distancia en todo el país.",
-    },
-  ],
+  locationItems: [{ label: "UBICACIÓN", value: "Rosario, Santa Fe" }],
   socials: [
     {
       label: "LinkedIn",
