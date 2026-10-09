@@ -13,16 +13,10 @@ import type {
 
 import legalDashboard from "../assets/proyectos/legal/dashboard.png";
 import legalExpediente from "../assets/proyectos/legal/expediente.png";
-import legalExpedienteEdit from "../assets/proyectos/legal/expediente-edit.png";
 import legalClientes from "../assets/proyectos/legal/clientes.png";
 import legalAgenda from "../assets/proyectos/legal/agenda.png";
-import legalBiblioteca from "../assets/proyectos/legal/biblioteca.png";
 import legalBibliotecaIa from "../assets/proyectos/legal/biblioteca-ia.png";
 import legalContabilidad from "../assets/proyectos/legal/contabilidad.png";
-import legalObligaciones from "../assets/proyectos/legal/obligaciones.png";
-import legalTeam from "../assets/proyectos/legal/team.png";
-import legalLogin from "../assets/proyectos/legal/login.png";
-import legalSwitchUser from "../assets/proyectos/legal/switch-user.png";
 import leadsNuevaConsulta from "../assets/proyectos/leadscrm/01-nueva-consulta.png";
 import leadsBaseDeDatos from "../assets/proyectos/leadscrm/02-base-de-datos.png";
 import leadsConfiguracion from "../assets/proyectos/leadscrm/03-configuracion.png";
@@ -43,10 +37,10 @@ import pediatricErpAppointmentDialog from "../assets/proyectos/pediatric/erp-app
 import pediatricErpConsultations from "../assets/proyectos/pediatric/erp-consultations.png";
 import pediatricErpPatientRecord from "../assets/proyectos/pediatric/erp-patient-record.png";
 import pediatricPortalAppointments from "../assets/proyectos/pediatric/portal-appointments.png";
-import pediatricPortalContact from "../assets/proyectos/pediatric/portal-contact.png";
 import limpiezaAdmin1 from "../assets/proyectos/limpieza/admin1.png";
 import limpiezaAdmin2 from "../assets/proyectos/limpieza/admin2.png";
 import limpiezaAdmin3 from "../assets/proyectos/limpieza/admin3.png";
+import limpiezaLogin from "../assets/proyectos/limpieza/login.png";
 
 export const isPending = (value: string) => value.includes("[PENDIENTE");
 
@@ -779,17 +773,33 @@ export const caseStudies: {
       "QR",
     ],
     gallery: [
+      { src: limpiezaAdmin3, alt: "Gestión de insumos organizada por edificio" },
       { src: limpiezaAdmin1, alt: "Panel de administración con la grilla semanal de turnos" },
       { src: limpiezaAdmin2, alt: "Liquidación automática de sueldos por horas verificadas" },
-      { src: limpiezaAdmin3, alt: "Gestión de insumos organizada por edificio" },
+      { src: limpiezaLogin, alt: "Pantalla de inicio de sesión con usuario y contraseña" },
     ],
     problem: {
       eyebrow: "El desafío",
       title: "El control manual llegó a su límite.",
       body: [
-        "La empresa manejaba la asistencia de su personal en múltiples edificios con planillas de Excel compartidas por WhatsApp. Cada fin de mes, el área administrativa tardaba varios días en cruzar datos de asistencia, calcular sueldos y liquidar impuestos.",
-        "Las quejas por inasistencias llegaban a 4-6 por mes sin que hubiera forma de verificarlas en tiempo real. El personal de supervisión no tenía visibilidad de qué empleado estaba en qué edificio, y el stock de insumos por edificio se registraba a mano.",
-        "El sistema existente no era escalable: cada empleado nuevo multiplicaba el trabajo administrativo en lugar de distribuirlo.",
+        "El control de una empresa con más de 30 edificios pasaba por planillas y mensajes de WhatsApp.",
+      ],
+    },
+    contrast: {
+      labels: { before: "Antes", after: "Después" },
+      rows: [
+        {
+          before: "Asistencia en planillas de Excel compartidas por WhatsApp",
+          after: "Entrada y salida con GPS y código QR desde el teléfono",
+        },
+        {
+          before: "Cierre de mes cruzando datos a mano durante varios días",
+          after: "Sueldos e impuestos calculados automáticamente en minutos",
+        },
+        {
+          before: "Sin visibilidad de quién estaba en cada edificio",
+          after: "Mapa en vivo con las alertas de inasistencia",
+        },
       ],
     },
     solution: {
@@ -898,9 +908,24 @@ export const caseStudies: {
       eyebrow: "El desafío",
       title: "Una planilla de Excel no aguanta cuatro canales y varios asesores a la vez",
       body: [
-        "La concesionaria recibe consultas diarias de campañas de Facebook e Instagram: clientes interesados en modelos como Jolion, H6 o Tank. Hasta ahora esas consultas se cargaban a mano en una planilla de Excel, filtrando manualmente por modelo, nombre de cliente y teléfono.",
-        "Con múltiples canales de entrada (WhatsApp, Instagram, Facebook y Mercado Libre) y varios asesores atendiendo en paralelo, la planilla se volvía difícil de mantener ordenada y de asignar seguimiento a tiempo. Cada consulta nueva multiplicaba el trabajo manual en lugar de ordenarlo.",
-        "Una muestra real de la planilla que reemplazamos mostró qué necesitaban registrar: en 22 consultas, el 60% de los clientes pedían cotización de su vehículo usado y condiciones de financiación. Eso dejó en claro que el seguimiento no podía reducirse a datos de contacto genéricos: hacían falta campos específicos para cotización de usado y plan de pago.",
+        "Cuatro canales de entrada y varios asesores trabajando sobre una misma planilla de Excel.",
+      ],
+    },
+    contrast: {
+      labels: { before: "Antes", after: "Después" },
+      rows: [
+        {
+          before: "Consultas cargadas a mano en una planilla de Excel",
+          after: "Todas las consultas en una misma base, con fecha, canal y modelo",
+        },
+        {
+          before: "Seguimiento que dependía de la memoria de cada uno",
+          after: "Cada lead asignado a un asesor responsable",
+        },
+        {
+          before: "Buscar por modelo o teléfono filtrando a mano",
+          after: "Filtros por marca/modelo, cliente y teléfono al instante",
+        },
       ],
     },
     solution: {
@@ -951,6 +976,12 @@ export const caseStudies: {
           label:
             "Cada consulta se filtra por marca/modelo, cliente o teléfono y se asigna a un asesor, para que el seguimiento no se pierda entre varios canales y varias personas.",
         },
+        {
+          value: "2",
+          unit: "campos de negocio",
+          label:
+            "cotización del vehículo usado del cliente y condiciones de financiación, salidos de lo que mostraba la planilla anterior.",
+        },
       ],
     },
     cta: {
@@ -984,23 +1015,32 @@ export const caseStudies: {
       { src: legalDashboard, alt: "Panel de inicio del estudio jurídico con agenda, vencimientos y resumen contable" },
       { src: legalClientes, alt: "Gestión de clientes con filtros por área, expedientes y turnos del día" },
       { src: legalExpediente, alt: "Detalle de un expediente judicial" },
-      { src: legalExpedienteEdit, alt: "Edición de un expediente judicial" },
       { src: legalAgenda, alt: "Agenda del estudio con audiencias, plazos y bandeja operativa" },
-      { src: legalBiblioteca, alt: "Biblioteca jurídica de Argentina y Paraguay con verificación de fuentes oficiales" },
       { src: legalBibliotecaIa, alt: "Comparador asistido por IA entre el texto derogado y el texto vigente de una norma" },
       { src: legalContabilidad, alt: "Resumen contable con evolución mensual y seguimiento de señas" },
-      { src: legalObligaciones, alt: "Seguimiento impositivo y administrativo con vencimientos, montos y estados" },
-      { src: legalTeam, alt: "Gestión de equipo con usuarios, roles y auditoría de accesos" },
-      { src: legalLogin, alt: "Acceso al sistema del estudio jurídico" },
-      { src: legalSwitchUser, alt: "Selección de cuenta para ingresar al sistema" },
     ],
     problem: {
       eyebrow: "El desafío",
       title: "Un estudio que opera en dos jurisdicciones no puede depender de un software genérico",
       body: [
-        "El estudio atiende causas en Argentina y Paraguay, dos jurisdicciones con normativa, procesos y organismos distintos. Un sistema estándar de gestión no contempla esa particularidad: la estructura de un expediente, las obligaciones fiscales o las fuentes normativas de cada país no se comportan igual.",
-        "El abogado necesitaba una sola plataforma que centralizara clientes, expedientes, agenda y finanzas del estudio, pero que al mismo tiempo se adaptara a la normativa y a los procesos de ambos países en lugar de forzarlos a un molde único.",
-        "El sistema se construyó en base a sus requisitos y pretensiones concretas: no se trata de un proyecto propio sin validación externa, sino de una herramienta pensada y ajustada para la operación real de un estudio que trabaja en dos mercados a la vez.",
+        "Un estudio que atiende causas en Argentina y Paraguay no encaja en un software genérico.",
+      ],
+    },
+    contrast: {
+      labels: { before: "Antes", after: "Después" },
+      rows: [
+        {
+          before: "Un software estándar que fuerza las dos jurisdicciones a un molde único",
+          after: "Expedientes y obligaciones modelados según el proceso de cada país",
+        },
+        {
+          before: "Normas guardadas que quedaban desactualizadas sin que nadie se entere",
+          after: "Verificación contra Infoleg y CSJ-IIJ con alerta asistida por IA",
+        },
+        {
+          before: "Clientes, expedientes y agenda en herramientas distintas",
+          after: "Una sola plataforma con toda la operación del estudio",
+        },
       ],
     },
     solution: {
@@ -1034,9 +1074,28 @@ export const caseStudies: {
       title: "Las funcionalidades entregadas según las pretensiones del estudio.",
       metrics: [
         {
-          value: "[PENDIENTE]",
-          unit: "métricas de resultado si las hay",
-          label: "No contamos aún con cifras de ahorro o de tiempo. Completá con datos reales cuando los tengas.",
+          value: "2",
+          unit: "jurisdicciones",
+          label:
+            "Argentina y Paraguay en un mismo sistema: expedientes, obligaciones y fuentes de cada país, sin molde único.",
+        },
+        {
+          value: "IA",
+          unit: "asistente",
+          label:
+            "comparador entre el texto derogado y el vigente de una norma, con alerta cuando quedó desactualizada.",
+        },
+        {
+          value: "2",
+          unit: "fuentes oficiales",
+          label:
+            "cada versión guardada se verifica contra la fuente oficial de cada país: Infoleg para Argentina y CSJ-IIJ para Paraguay.",
+        },
+        {
+          value: "1",
+          unit: "plataforma",
+          label:
+            "clientes, expedientes judiciales y extrajudiciales, agenda, finanzas y obligaciones en el mismo lugar.",
         },
       ],
     },
@@ -1083,9 +1142,24 @@ export const caseStudies: {
       eyebrow: "El desafío",
       title: "Una operación ya digitalizada que no se veía desde afuera",
       body: [
-        "La empresa ya gestionaba su operación interna con un ERP propio, pero necesitaba una presencia pública a la altura de esa operación: un sitio que explicara su propuesta de valor y ordenara las consultas entrantes.",
-        "Sus diferenciales más fuertes (personal propio asegurado, sin subcontratación, y verificación de asistencia en tiempo real por QR y GPS) tenían que comunicarse de forma clara a edificios, oficinas y clínicas.",
-        "El desafío adicional era no fragmentar la marca: el acceso de empleados y las llamadas al sistema interno debían convivir bajo el mismo dominio que el sitio público.",
+        "La operación ya estaba digitalizada con un ERP propio, pero no se veía desde afuera.",
+      ],
+    },
+    contrast: {
+      labels: { before: "Antes", after: "Después" },
+      rows: [
+        {
+          before: "Una operación fuerte sin presencia pública a la altura",
+          after: "Un sitio que explica la propuesta de valor y ordena las consultas",
+        },
+        {
+          before: "Consultas entrantes sin orden ni filtro",
+          after: "Un flujo de contacto que entrega consultas calificadas",
+        },
+        {
+          before: "El sitio, el acceso de empleados y la API en dominios separados",
+          after: "Todo bajo el mismo dominio, con un proxy en el borde hacia el ERP",
+        },
       ],
     },
     solution: {
@@ -1119,10 +1193,28 @@ export const caseStudies: {
       title: "El sitio está en producción; las métricas de negocio, pendientes.",
       metrics: [
         {
-          value: "[PENDIENTE]",
-          unit: "métricas de resultado",
+          value: "1",
+          unit: "dominio",
           label:
-            "Todavía no contamos con cifras de conversión o de consultas generadas. Completar con datos reales cuando estén disponibles.",
+            "el sitio público, el acceso de empleados y las llamadas a la API conviven bajo la misma dirección, con un proxy en el borde,",
+        },
+        {
+          value: "100%",
+          unit: "estático",
+          label:
+            "generación estática y contenido tipado: el build produce el HTML listo, sin servidor propio.",
+        },
+        {
+          value: "QR y GPS",
+          unit: "verificación",
+          label:
+            "los diferenciales más fuertes de la operación (personal propio y asistencia verificada) explicados desde la portada.",
+        },
+        {
+          value: "Pruebas",
+          unit: "automatizadas",
+          label:
+            "batería unitaria y end-to-end en varios tamaños de pantalla, que cuida velocidad, navegación y formularios.",
         },
       ],
     },
@@ -1168,9 +1260,24 @@ export const caseStudies: {
       eyebrow: "El desafío",
       title: "Un consultorio que abría tenía que estar online desde el primer día",
       body: [
-        "La clínica abría sin pacientes todavía, sin sistema anterior y sin costumbres que respetar. Parece una ventaja, pero es una decisión: si el canal público no se piensa desde el principio, después se parchea durante años.",
-        "La atención se da en un domicilio particular, así que el sitio no podía publicar la dirección exacta: se muestra la ciudad y el resto se libera recién con una cuenta registrada.",
-        "Las familias tenían que poder reservar sin llamar por teléfono, y el sitio tenía que transmitir la autoridad de la profesional y su mirada de seguimiento a lo largo de las etapas.",
+        "Un consultorio que abría sin pacientes y sin sistema anterior: online desde el primer día y sin publicar la dirección.",
+      ],
+    },
+    contrast: {
+      labels: { before: "Antes", after: "Después" },
+      rows: [
+        {
+          before: "Reservar turno llamando por teléfono",
+          after: "El turno se pide desde el portal y entra a la cola de confirmación",
+        },
+        {
+          before: "La dirección del consultorio publicada para cualquiera",
+          after: "Sólo la ciudad en el sitio; la ubicación exacta se libera con cuenta",
+        },
+        {
+          before: "El sitio sin contenido ni costumbres que respetar",
+          after: "Cinco etapas del cuidado como eje, con testimonios y cierre en el turno",
+        },
       ],
     },
     solution: {
@@ -1197,11 +1304,6 @@ export const caseStudies: {
           description:
             "El sitio publica la ciudad. La ubicación exacta se libera sólo adentro del portal, con la cuenta de la familia.",
         },
-        {
-          title: "Casi sin JavaScript",
-          description:
-            "El sitio se renderiza en el servidor y sólo las piezas interactivas viajan como islas de React, así que pesa poco y carga rápido en el teléfono.",
-        },
       ],
     },
     results: {
@@ -1225,6 +1327,12 @@ export const caseStudies: {
           unit: "publicada",
           label:
             "la ubicación exacta se libera recién con la cuenta registrada de la familia",
+        },
+        {
+          value: "5",
+          unit: "etapas",
+          label:
+            "del cuidado, de la preconcepción a la adolescencia, en un abanico interactivo en escritorio y carrusel en mobile.",
         },
       ],
     },
@@ -1282,22 +1390,29 @@ export const caseStudies: {
         src: pediatricErpPatientRecord,
         alt: "Historia clínica: datos, antecedentes perinatales y cobertura junto a la línea de evoluciones",
       },
-      {
-        src: pediatricPortalAppointments,
-        alt: "Portal de familias: próximo turno, pedido de turno nuevo y contacto",
-      },
-      {
-        src: pediatricPortalContact,
-        alt: "Contacto y ubicación: la dirección exacta aparece recién con la sesión iniciada",
-      },
     ],
     problem: {
       eyebrow: "El desafío",
       title: "Historia clínica, turnos y privacidad: tres decisiones que no se parchean",
       body: [
-        "La clínica abría sin pacientes y sin sistema anterior: no había nada que migrar, pero tampoco ninguna costumbre que corrigiera el diseño. Si el registro clínico o el canal de turnos nacían flojos, se iban a parchear durante años.",
-        "La Ley 26.529 pide registros trazables: quién escribió, cuándo y qué cambió. Eso no se resuelve con una política escrita, se resuelve en el modelo de datos.",
-        "Y como la atención se da en un domicilio, la ubicación exacta no puede quedar publicada: se libera sólo para las familias con cuenta.",
+        "Historia clínica, turnos y privacidad: tres decisiones que nacen con la clínica, no después.",
+      ],
+    },
+    contrast: {
+      labels: { before: "Antes", after: "Después" },
+      rows: [
+        {
+          before: "Registros clínicos sin trazabilidad obligatoria",
+          after: "Baja lógica y auditoría que sólo se agrega, conforme a la Ley 26.529",
+        },
+        {
+          before: "El turno cerrado por teléfono",
+          after: "La familia lo pide desde el portal y entra a la cola de confirmación",
+        },
+        {
+          before: "La dirección exacta publicada en el sitio",
+          after: "Sólo con la cuenta registrada de la familia",
+        },
       ],
     },
     solution: {
@@ -1324,11 +1439,6 @@ export const caseStudies: {
           description:
             "La receta se emite en PDF desde la historia clínica, con los datos de la clínica, del profesional y su matrícula.",
         },
-        {
-          title: "Seguridad por defecto y sesiones revocables",
-          description:
-            "Un guard global de JWT y permisos por cinco roles: el alta pública sólo puede crear pacientes, las cuentas del equipo las crea un administrador, y cada pedido revalida el token contra la base, así que una cuenta dada de baja deja de funcionar al instante.",
-        },
       ],
     },
     results: {
@@ -1352,6 +1462,12 @@ export const caseStudies: {
           unit: "Ley",
           label:
             "trazabilidad en el modelo de datos: baja lógica y auditoría que sólo se agrega",
+        },
+        {
+          value: "PDF",
+          unit: "recetas",
+          label:
+            "emitidas desde la historia clínica, con los datos de la clínica, del profesional y su matrícula.",
         },
       ],
     },

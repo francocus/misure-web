@@ -380,6 +380,30 @@ gtag('config', '${gaId}');`
       };
       document.addEventListener("astro:page-load", initCtaScroll);
       initCtaScroll();
+
+      // Llegada a la página de un caso DESDE otra página (el mazo de /proyectos,
+      // las tarjetas del inicio): se entra directo a la ficha, o sea la captura
+      // con las tecnologías, sin pasar por el título. El evento de swap es lo
+      // que distingue esta llegada de entrar por la URL o recargar: en esos dos
+      // casos no hay swap, el scroll no se toca y se ve el título como siempre.
+      let llegoNavegando = false;
+      const irALaFicha = () => {
+        const ficha = document.querySelector<HTMLElement>("[data-case-hero]");
+        if (!ficha) return;
+        ficha.scrollIntoView({ block: "start", behavior: "instant" });
+      };
+      document.addEventListener("astro:before-swap", () => {
+        llegoNavegando = true;
+      });
+      // Se corre también acá, antes de la transición, para que no se vea el
+      // salto desde el título; y de nuevo en page-load por si el router
+      // reposiciona el scroll al terminar.
+      document.addEventListener("astro:after-swap", irALaFicha);
+      document.addEventListener("astro:page-load", () => {
+        if (!llegoNavegando) return;
+        llegoNavegando = false;
+        irALaFicha();
+      });
     </script>
   <ScrollRail />
   </body>

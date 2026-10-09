@@ -32,6 +32,11 @@ export type CaseStudyCover = {
   alt: string;
 };
 
+export type CaseContrast = {
+  labels: { before: string; after: string };
+  rows: { before: string; after: string }[];
+};
+
 export type CaseStudy = {
   slug: string;
   seo: { title: string; description: string };
@@ -43,6 +48,9 @@ export type CaseStudy = {
   technologies: string[];
   gallery?: CaseStudyCover[];
   problem: { eyebrow: string; title: string; body: string[] };
+  // Con contraste, `problem.body` es solo la entrada (1 o 2 frases) y el resto
+  // del desafío se cuenta en la tabla de antes y después.
+  contrast?: CaseContrast;
   solution: {
     eyebrow: string;
     title: string;

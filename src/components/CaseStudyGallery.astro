@@ -1,4 +1,13 @@
 ---
+// Galería de un caso: el marco queda fijo y adentro corre una cinta con todas
+// las capturas, que se desliza de a una (la animación de antes sin mover el
+// marco). Se pasa de una a otra con las flechas, con el swipe en el celular o
+// arrastrando con el mouse. Al tocar la captura se abre el visor a pantalla
+// completa sobre el fondo difuminado, donde se ven todas una por una.
+//
+// Las variantes llegan hasta 1920 porque en pantallas retina la captura ocupa
+// unos 1000 puntos CSS, o sea 2000 reales, y con el tope viejo de 1200 quedaba
+// al 60%.
 import { Image } from "astro:assets";
 import type { CaseStudyCover } from "../lib/types";
 import ScreenshotFrame from "./ui/ScreenshotFrame.astro";
@@ -6,147 +15,657 @@ import ScreenshotFrame from "./ui/ScreenshotFrame.astro";
 interface Props {
   images?: CaseStudyCover[];
   label?: string;
+  class?: string;
 }
 
-const { images = [], label = "Galería del proyecto" } = Astro.props;
+const {
+  images = [],
+  label = "Galería del proyecto",
+  class: className = "",
+} = Astro.props;
 const total = images.length;
 ---
 
-{total > 0 && (
-  <section
-    class="border-t border-green"
-    data-gallery
-    aria-label={label}
-    aria-roledescription="carrusel"
-  >
-    <div class="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-12">
-      <div class="relative flex justify-center">
-        {images.map((image, index) => (
-          <div
-            class:list={["w-full", index !== 0 && "hidden"]}
-            data-gallery-slide
-          >
-            <ScreenshotFrame class="mx-auto w-fit max-w-full">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                widths={[800, 1200, 1920]}
-                sizes="(min-width: 1152px) 1104px, 100vw"
-                class="mx-auto max-h-[70vh] w-auto max-w-full"
-                loading={index === 0 ? "eager" : "lazy"}
-              />
-            </ScreenshotFrame>
-          </div>
-        ))}
-
-        {total > 1 && (
-          <>
+{
+  total > 0 && (
+    <section
+      class:list={["case-gallery border-t border-green", className]}
+      data-gallery
+      aria-label={label}
+    >
+      <div class="case-gallery__inner">
+        <div class="case-gallery__viewport">
+          {total > 1 && (
             <button
               type="button"
               data-gallery-prev
-              aria-label="Imagen anterior"
-              class="absolute left-0 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-2 border-green bg-cream text-lg text-green transition hover:bg-green hover:text-cream active:translate-x-[-4px] active:translate-y-[calc(50%+4px)] active:duration-75"
+              aria-label="Foto anterior"
+              class="case-gallery__nav case-gallery__nav--prev"
             >
               <span aria-hidden="true">←</span>
             </button>
+          )}
+
+          <ScreenshotFrame
+            class="case-gallery__frame"
+            style={`--shot-aspect: ${images[0].src.width} / ${images[0].src.height};`}
+          >
+            <button
+              type="button"
+              class="group case-gallery__open"
+              data-gallery-open
+              aria-label={`Ampliar: ${images[0].alt}`}
+            >
+              <span class="case-gallery__cinta" data-gallery-cinta>
+                {images.map((image, index) => (
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    widths={[480, 800, 1200, 1920]}
+                    sizes="(min-width: 80rem) 63rem, (min-width: 48rem) 85vw, 100vw"
+                    class="case-gallery__img"
+                    data-gallery-foto
+                    data-activo={index === 0 ? "" : undefined}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    draggable="false"
+                  />
+                ))}
+              </span>
+              <span class="gallery-cta" aria-hidden="true">Ampliar</span>
+            </button>
+          </ScreenshotFrame>
+
+          {total > 1 && (
             <button
               type="button"
               data-gallery-next
-              aria-label="Imagen siguiente"
-              class="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-2 border-green bg-cream text-lg text-green transition hover:bg-green hover:text-cream active:translate-x-[-4px] active:translate-y-[calc(50%+4px)] active:duration-75"
+              aria-label="Foto siguiente"
+              class="case-gallery__nav case-gallery__nav--next"
             >
               <span aria-hidden="true">→</span>
             </button>
-          </>
-        )}
-      </div>
+          )}
+        </div>
 
-      {total > 1 && (
-        <div class="mt-4 flex items-center justify-between">
+        {total > 1 && (
           <p
-            class="font-mono text-xs uppercase tracking-widest text-green/75"
+            class="case-gallery__counter"
             data-gallery-counter
             aria-live="polite"
           >
             {`01 / ${String(total).padStart(2, "0")}`}
           </p>
-          <div class="flex gap-2">
-            {images.map((image, index) => (
-              <button
-                type="button"
-                data-gallery-dot={index}
-                aria-label={`Ver imagen ${index + 1}: ${image.alt}`}
-                class="flex h-6 w-6 items-center justify-center rounded-full border border-transparent bg-clip-content p-1.5 transition active:translate-x-[-4px] active:translate-y-[4px] active:duration-75"
-              >
-                <span class="block h-2.5 w-2.5 rounded-full border border-green"></span>
-              </button>
-            ))}
-          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+{
+  total > 1 && (
+    <dialog
+      data-lightbox
+      class="lightbox"
+      aria-label={`Capturas ampliadas: ${label}`}
+    >
+      <div class="lightbox__inner">
+        {images.map((image) => (
+          <figure class="lightbox__slide" data-lightbox-slide>
+            <figcaption class="lightbox__caption">{image.alt}</figcaption>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              widths={[1200, 1920]}
+              sizes="min(96vw, 110rem)"
+              class="lightbox__img"
+              loading="lazy"
+            />
+          </figure>
+        ))}
+
+        <div class="lightbox__bar" data-lightbox-bar>
+          <button
+            type="button"
+            data-lightbox-prev
+            aria-label="Foto anterior"
+            class="lightbox__nav"
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <p class="lightbox__counter" data-lightbox-counter aria-live="polite">
+            {`01 / ${String(total).padStart(2, "0")}`}
+          </p>
+          <button
+            type="button"
+            data-lightbox-next
+            aria-label="Foto siguiente"
+            class="lightbox__nav"
+          >
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
-      )}
-    </div>
-  </section>
-)}
+
+        <button
+          type="button"
+          data-lightbox-close
+          aria-label="Cerrar"
+          class="lightbox__nav lightbox__close"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+    </dialog>
+  )
+}
+
+<style>
+  /* La sección no fija alto propio: en la ficha del caso ocupa lo que sobra
+     entre el título y las tecnologías (ver `.case-hero`), y si se usa suelta se
+     queda con el alto de la captura. */
+  .case-gallery__inner {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: var(--gallery-pad-y, 1.5rem);
+    margin-inline: auto;
+    max-width: 72rem;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 48rem) {
+    .case-gallery__inner {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  .case-gallery__viewport {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 0;
+    /* Ocupa el alto que sobra entre el borde y las tecnologías y centra la
+       captura: el aire se reparte arriba y abajo en partes iguales. */
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    /* Las flechas viven FUERA del marco de la captura: acá se les reserva el
+       costado y el carrusel se queda con el ancho que sobra. Sin esto quedaban
+       encima del marco y el borde de arriba se leía como parte del contenedor. */
+    padding-inline: var(--gallery-arrow-space, 0rem);
+  }
+
+  /* El marco es uno solo y queda fijo (borde y barra quietos): adentro corre una
+     cinta con todas las capturas y se desliza de a una, que es la animación de
+     antes sin mover el marco. */
+  .case-gallery__open {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+
+  .case-gallery__cinta {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transform: translateX(calc(var(--indice, 0) * -100%));
+    transition: transform 320ms var(--ease-out);
+  }
+
+  /* El marco define la caja: ancho del contenedor y alto según el aspecto de la
+     captura, con tope en el alto disponible. La captura la llena, así no queda
+     ninguna franja entre las dos. */
+  :global(.case-gallery__frame) {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: var(--shot-aspect, 16 / 10);
+    flex-direction: column;
+    min-height: 0;
+    border: none;
+    border-radius: 0.375rem;
+    background-color: transparent;
+  }
+
+  :global(.case-gallery__frame .screenshot-frame-bar) {
+    flex-shrink: 0;
+    background-color: var(--color-green);
+  }
+
+  :global(.case-gallery__frame .screenshot-frame-shot) {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    overflow: hidden;
+  }
+
+  /* Cada captura ocupa el ancho del marco: la cinta corre y la que queda a la
+     vista es la activa. */
+  :global(.case-gallery__img) {
+    display: block;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    -webkit-user-drag: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-gallery__cinta {
+      transition: none;
+    }
+  }
+
+  /* Aviso de "Ampliar": aparece al pasar el mouse o al enfocar, y en pantallas
+     sin hover queda a la vista, porque si no la captura no dice que se toca. */
+  .gallery-cta {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background-color: var(--color-green);
+    color: var(--color-cream);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 200ms var(--ease-out);
+  }
+
+  .group:hover .gallery-cta,
+  .group:focus-visible .gallery-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (hover: none) {
+    .gallery-cta {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-cta {
+      transition: none;
+    }
+  }
+
+  .case-gallery__nav {
+    position: absolute;
+    top: 50%;
+    display: none;
+    height: 2.75rem;
+    width: 2.75rem;
+    translate: 0 -50%;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-green);
+    border-radius: 999px;
+    background-color: var(--color-cream);
+    color: var(--color-green);
+    font-size: 1.125rem;
+    transition:
+      background-color 150ms var(--ease-out),
+      color 150ms var(--ease-out);
+  }
+
+  /* Las flechas son solo para pantallas anchas con mouse: en táctil el carrusel
+     se corre con el dedo y en ventanas angostas se comen un tercio del ancho,
+     así que ahí no se reserva el costado y la captura usa todo. */
+  @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
+    .case-gallery__viewport {
+      --gallery-arrow-space: 3.25rem;
+    }
+
+    .case-gallery__nav {
+      display: flex;
+    }
+  }
+
+  .case-gallery__nav:hover {
+    background-color: var(--color-green);
+    color: var(--color-cream);
+  }
+
+  .case-gallery__nav--prev {
+    left: 0;
+  }
+
+  .case-gallery__nav--next {
+    right: 0;
+  }
+
+  .case-gallery__counter {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-green) 70%, transparent);
+  }
+
+  /* Visor: fondo difuminado y nada más, sin tinte de color. El contenedor de
+     adentro no recibe clicks, así un click en el aire cierra el visor. */
+  .lightbox {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-green);
+    overflow: hidden;
+  }
+
+  .lightbox::backdrop {
+    background-color: transparent;
+    -webkit-backdrop-filter: blur(28px);
+    backdrop-filter: blur(28px);
+  }
+
+  .lightbox__inner {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* Arriba queda el aire del botón de cerrar (que va en la esquina) y abajo
+       el de la barra: todo lo demás es captura. */
+    padding: 3.25rem 0.75rem 0.75rem;
+    pointer-events: none;
+  }
+
+  /* El estado activo va por atributo y no por la utilidad `hidden`: el selector
+     con scope (`.lightbox__slide[data-astro-cid-...]`) tiene más especificidad
+     que `.hidden` y el `display: flex` le ganaba al `none`, así que las cuatro
+     capturas quedaban apiladas y la visible fuera de cuadro. */
+  .lightbox__slide {
+    display: none;
+    max-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    pointer-events: auto;
+  }
+
+  .lightbox__slide[data-activo] {
+    display: flex;
+  }
+
+  /* La captura se queda con todo el alto que sobra: arriba el epígrafe, abajo la
+     barra de navegación. El ancho lo limita la ventana. */
+  .lightbox__img {
+    display: block;
+    width: auto;
+    min-height: 0;
+    max-width: min(96vw, 110rem);
+    max-height: calc(100dvh - 9.5rem);
+    border: 1px solid color-mix(in srgb, var(--color-green) 55%, transparent);
+    border-radius: 0.375rem;
+    box-shadow: 0 1.5rem 4rem color-mix(in srgb, var(--color-green) 35%, transparent);
+  }
+
+  .lightbox__caption {
+    max-width: min(92vw, 60rem);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-green) 85%, transparent);
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-cream);
+  }
+
+  .lightbox__bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    pointer-events: auto;
+  }
+
+  .lightbox__counter {
+    min-width: 5rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-green) 85%, transparent);
+    text-align: center;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-cream);
+  }
+
+  .lightbox__nav {
+    display: flex;
+    height: 2.75rem;
+    width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-green);
+    border-radius: 999px;
+    background-color: var(--color-cream);
+    color: var(--color-green);
+    font-size: 1.125rem;
+    transition:
+      background-color 150ms var(--ease-out),
+      color 150ms var(--ease-out);
+  }
+
+  .lightbox__nav:hover {
+    background-color: var(--color-green);
+    color: var(--color-cream);
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    pointer-events: auto;
+  }
+</style>
 
 <script>
-  const initGalleries = () => {
-    document
-      .querySelectorAll<HTMLElement>("[data-gallery]")
-      .forEach((gallery) => {
-        if (gallery.dataset.galleryReady === "true") return;
-        gallery.dataset.galleryReady = "true";
+  // Los listeners van en el documento y las búsquedas se hacen dentro del
+  // handler: así la galería y el visor siguen andando aunque el router de Astro
+  // reemplace el DOM al navegar entre páginas.
+  //
+  // El carrusel no se corre: el marco queda fijo y adentro cambia la captura
+  // (fundido). Se pasa de una a otra con las flechas, con el swipe en el celular
+  // o arrastrando con el mouse.
+  let bound = false;
+  let indiceVisor = 0;
+  let swipeX: number | null = null;
+  let arrastreX: number | null = null;
+  // Momento en que termina un arrastre: sirve para distinguir el click que cierra
+  // ese gesto (que no debe abrir el visor) de un click nuevo.
+  let finDeArrastre = 0;
 
-        const slides = gallery.querySelectorAll<HTMLElement>(
-          "[data-gallery-slide]"
-        );
-        const prev = gallery.querySelector<HTMLButtonElement>(
-          "[data-gallery-prev]"
-        );
-        const next = gallery.querySelector<HTMLButtonElement>(
-          "[data-gallery-next]"
-        );
-        const counter = gallery.querySelector<HTMLElement>(
-          "[data-gallery-counter]"
-        );
-        const dots = gallery.querySelectorAll<HTMLButtonElement>(
-          "[data-gallery-dot]"
-        );
-        if (slides.length < 2) return;
+  const UMBRAL = 40;
+  const pad = (value: number) => String(value).padStart(2, "0");
 
-        const total = slides.length;
-        let index = 0;
-        const pad = (value: number) => String(value).padStart(2, "0");
+  const galeria = () => document.querySelector<HTMLElement>("[data-gallery]");
+  const fotosDe = (gal: HTMLElement) => [
+    ...gal.querySelectorAll<HTMLImageElement>("[data-gallery-foto]"),
+  ];
+  const visor = () => document.querySelector<HTMLDialogElement>("[data-lightbox]");
+  const slidesDe = (dialog: HTMLDialogElement) => [
+    ...dialog.querySelectorAll<HTMLElement>("[data-lightbox-slide]"),
+  ];
 
-        const render = () => {
-          slides.forEach((slide, slideIndex) => {
-            slide.classList.toggle("hidden", slideIndex !== index);
-          });
-          if (counter) counter.textContent = `${pad(index + 1)} / ${pad(total)}`;
-          dots.forEach((dot, dotIndex) => {
-            const active = dotIndex === index;
-            dot.classList.toggle("bg-green", active);
-            dot.setAttribute("aria-current", active ? "true" : "false");
-          });
-        };
-
-        const go = (direction: number) => {
-          index = (index + direction + total) % total;
-          render();
-        };
-
-        prev?.addEventListener("click", () => go(-1));
-        next?.addEventListener("click", () => go(1));
-        dots.forEach((dot) =>
-          dot.addEventListener("click", () => {
-            index = Number(dot.getAttribute("data-gallery-dot")) || 0;
-            render();
-          })
-        );
-
-        render();
-      });
+  // El índice se lee del DOM y no de una variable: así no queda desfasado cuando
+  // el router cambia de página y la galería es otra.
+  const indiceActual = (gal: HTMLElement) => {
+    const i = fotosDe(gal).findIndex((foto) => foto.hasAttribute("data-activo"));
+    return i < 0 ? 0 : i;
   };
 
-  document.addEventListener("astro:page-load", initGalleries);
-  initGalleries();
+  const pintar = (gal: HTMLElement, destino: number) => {
+    const fotos = fotosDe(gal);
+    if (!fotos.length) return;
+    const indice = (destino + fotos.length) % fotos.length;
+    fotos.forEach((foto, i) => foto.toggleAttribute("data-activo", i === indice));
+    const cinta = gal.querySelector<HTMLElement>("[data-gallery-cinta]");
+    if (cinta) cinta.style.setProperty("--indice", String(indice));
+    const contador = gal.querySelector<HTMLElement>("[data-gallery-counter]");
+    if (contador) contador.textContent = `${pad(indice + 1)} / ${pad(fotos.length)}`;
+    const abrir = gal.querySelector<HTMLElement>("[data-gallery-open]");
+    const alt = fotos[indice].getAttribute("alt");
+    if (abrir && alt) abrir.setAttribute("aria-label", `Ampliar: ${alt}`);
+  };
+
+  const mover = (direccion: number) => {
+    const gal = galeria();
+    if (gal) pintar(gal, indiceActual(gal) + direccion);
+  };
+
+  const renderVisor = (dialog: HTMLDialogElement) => {
+    const slides = slidesDe(dialog);
+    slides.forEach((slide, i) =>
+      slide.toggleAttribute("data-activo", i === indiceVisor)
+    );
+    const counter = dialog.querySelector<HTMLElement>("[data-lightbox-counter]");
+    if (counter) {
+      counter.textContent = `${pad(indiceVisor + 1)} / ${pad(slides.length)}`;
+    }
+  };
+
+  const moverVisor = (dialog: HTMLDialogElement, direction: number) => {
+    const total = slidesDe(dialog).length;
+    if (total < 2) return;
+    indiceVisor = (indiceVisor + direction + total) % total;
+    renderVisor(dialog);
+  };
+
+  const abrirVisor = (dialog: HTMLDialogElement, i: number) => {
+    indiceVisor = i;
+    renderVisor(dialog);
+    dialog.showModal();
+    document.documentElement.style.overflow = "hidden";
+    dialog.addEventListener(
+      "close",
+      () => {
+        document.documentElement.style.overflow = "";
+      },
+      { once: true }
+    );
+  };
+
+  const onClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
+
+    // El click que cierra un arrastre no es un click: no cambia de foto ni abre
+    // el visor. Se compara por tiempo y no con una bandera, porque una bandera
+    // se comería también el click siguiente del usuario.
+    if (performance.now() - finDeArrastre < 350) return;
+
+    if (target.closest("[data-gallery-next]")) return mover(1);
+    if (target.closest("[data-gallery-prev]")) return mover(-1);
+
+    const dialog = visor();
+    if (!dialog) return;
+
+    const gal = galeria();
+    if (target.closest("[data-gallery-open]")) {
+      abrirVisor(dialog, gal ? indiceActual(gal) : 0);
+      return;
+    }
+
+    if (!dialog.open) return;
+    if (target.closest("[data-lightbox-next]")) return moverVisor(dialog, 1);
+    if (target.closest("[data-lightbox-prev]")) return moverVisor(dialog, -1);
+    if (target.closest("[data-lightbox-close]")) return dialog.close();
+    if (target === dialog) dialog.close();
+  };
+
+  const onKeydown = (event: KeyboardEvent) => {
+    const dialog = visor();
+    if (!dialog?.open) return;
+    if (event.key === "ArrowRight") {
+      moverVisor(dialog, 1);
+      event.preventDefault();
+    }
+    if (event.key === "ArrowLeft") {
+      moverVisor(dialog, -1);
+      event.preventDefault();
+    }
+  };
+
+  // Swipe: en el visor cambia de foto ampliada; en la galería cambia la captura.
+  const onTouchStart = (event: TouchEvent) => {
+    if (visor()?.open) {
+      swipeX = event.changedTouches[0]?.clientX ?? null;
+      return;
+    }
+    const gal = galeria();
+    if (gal && event.target instanceof Element && gal.contains(event.target)) {
+      swipeX = event.changedTouches[0]?.clientX ?? null;
+    }
+  };
+
+  const onTouchEnd = (event: TouchEvent) => {
+    if (swipeX === null) return;
+    const delta = (event.changedTouches[0]?.clientX ?? swipeX) - swipeX;
+    swipeX = null;
+    if (Math.abs(delta) < UMBRAL) return;
+    const dialog = visor();
+    if (dialog?.open) {
+      moverVisor(dialog, delta < 0 ? 1 : -1);
+      return;
+    }
+    mover(delta < 0 ? 1 : -1);
+  };
+
+  // Arrastre con el mouse sobre el marco: cambia de foto al soltar. No corre nada,
+  // así que el marco queda siempre en el mismo lugar.
+  const onPointerDown = (event: PointerEvent) => {
+    if (event.pointerType === "touch" || visor()?.open) return;
+    const gal = galeria();
+    if (!gal || !(event.target instanceof Element) || !gal.contains(event.target))
+      return;
+    arrastreX = event.clientX;
+  };
+
+  const onPointerUp = (event: PointerEvent) => {
+    if (arrastreX === null) return;
+    const delta = event.clientX - arrastreX;
+    arrastreX = null;
+    if (Math.abs(delta) < UMBRAL) return;
+    finDeArrastre = performance.now();
+    mover(delta < 0 ? 1 : -1);
+  };
+
+  const init = () => {
+    if (bound) return;
+    bound = true;
+    document.addEventListener("click", onClick);
+    document.addEventListener("keydown", onKeydown);
+    document.addEventListener("touchstart", onTouchStart, { passive: true });
+    document.addEventListener("touchend", onTouchEnd, { passive: true });
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("pointerup", onPointerUp);
+    document.addEventListener("pointercancel", onPointerUp);
+  };
+
+  init();
+  document.addEventListener("astro:page-load", init);
 </script>

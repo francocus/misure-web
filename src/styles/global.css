@@ -375,6 +375,46 @@ textarea:autofill {
   display: none;
 }
 
+/* Ficha de un caso: el primer pantallazo (título, una captura y las tecnologías)
+   entra en la ventana. El alto sale del viewport menos el header sticky, y la
+   captura se queda con el aire que sobra entre el título y las tecnologías: así
+   el tamaño de la foto se adapta a la ventana en vez de ser un número fijo.
+   Si la ventana es muy baja, la ficha crece (min-content) y la página scrollea;
+   el piso de la captura lo pone `--gallery-min-h`. */
+.case-hero {
+  display: flex;
+  height: calc(100dvh - var(--nav-h));
+  min-height: min-content;
+  flex-direction: column;
+  /* Cuando se entra desde otra página, la ficha se alinea debajo del header
+     sticky: así ocupa la pantalla entera, de borde a borde. */
+  scroll-margin-top: var(--nav-h);
+}
+
+.case-hero__gallery {
+  flex: 1;
+  min-height: var(--gallery-min-h, 13rem);
+}
+
+.case-hero__meta > div {
+  padding-block: var(--meta-pad-y, 2.5rem);
+}
+
+/* Nivel compacto por alto: recorta aire y tipografía de display, nunca copy ni
+   el alto de los controles. Los umbrales salen de medir la ficha. */
+@media (max-height: 47rem) {
+  .case-hero {
+    --gallery-pad-y: 0.75rem;
+    --meta-pad-y: 1.25rem;
+  }
+}
+
+@media (max-height: 40rem) {
+  .case-hero {
+    --gallery-min-h: 9rem;
+  }
+}
+
 .link-ink {
   position: relative;
   padding-top: 6px;

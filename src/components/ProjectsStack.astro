@@ -85,12 +85,18 @@ const projectCount = projects.length;
                 </div>
                 <div class="folder__shots">
                   <div class="folder__shot">
+                    {/* La captura ocupa 42rem en la columna de 55fr del mazo, no
+                       30rem: con el sizes viejo el navegador bajaba la variante
+                       de 480px para mostrarla a 653 y se veía borrosa (a DPR 2
+                       llegaba con el 37% de lo que necesita). Las variantes
+                       llegan hasta 1440 para que en pantallas retina tenga de
+                       sobra. */}
                     <ScreenshotFrame compact>
                       <Image
                         src={gallery[0].src}
                         alt={gallery[0].alt}
-                        widths={[480, 768, 1088]}
-                        sizes="(min-width: 48rem) 30rem, 88vw"
+                        widths={[480, 768, 1088, 1440]}
+                        sizes="(min-width: 80rem) 42rem, (min-width: 48rem) 50vw, 88vw"
                         class="folder__image"
                         loading={index === 0 ? "eager" : "lazy"}
                       />
@@ -378,6 +384,19 @@ const projectCount = projects.length;
     display: flex;
     align-items: stretch;
     justify-content: stretch;
+  }
+
+  /* El marco y su interior heredan el tamaño de la zona de captura: ancho y
+     alto. Sin esto el marco se estira con la carpeta pero la captura se queda
+     con su tamaño natural y sobra marco vacío (medido: marco 482x792 contra
+     captura 480x300 en 3840x2160), y en mobile la captura quedaba angosta
+     dentro de su zona porque el ancho del marco salía del contenido. */
+  .folder__shot :global(.screenshot-frame),
+  .folder__shot :global(.screenshot-frame-shot) {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
   }
 
   .folder__image {

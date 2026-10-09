@@ -1,0 +1,59 @@
+---
+// Bloque de antes y después del caso: reemplaza los párrafos del desafío por
+// una tabla de dos columnas. La columna "después" va en verde porque es el
+// resultado; la de "antes" queda en crema, como el resto del texto de la página.
+//
+// Es el bloque que estandariza el cuerpo de todos los casos: siempre 3 filas,
+// siempre los mismos rótulos, y el lector lo escanea en dos segundos.
+import type { CaseContrast } from "../lib/types";
+
+interface Props {
+  contrast: CaseContrast;
+}
+
+const { contrast } = Astro.props;
+const lastRow = contrast.rows.length - 1;
+---
+
+<div class="flex flex-col gap-6" data-reveal style="transition-delay:60ms">
+  <table class="w-full border-collapse border border-green">
+    <thead>
+      <tr>
+        <th
+          scope="col"
+          class="w-1/2 border-b border-green px-4 py-3 text-left font-mono text-[0.65rem] uppercase tracking-widest text-green/60 md:px-6 md:py-4"
+        >
+          {contrast.labels.before}
+        </th>
+        <th
+          scope="col"
+          class="w-1/2 border-b border-l border-green bg-green px-4 py-3 text-left font-mono text-[0.65rem] uppercase tracking-widest text-cream/70 md:px-6 md:py-4"
+        >
+          {contrast.labels.after}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {contrast.rows.map((row, index) => (
+        <tr>
+          <td
+            class:list={[
+              "px-4 py-4 text-sm leading-relaxed text-green/75 md:px-6 md:py-5",
+              index < lastRow && "border-b border-green",
+            ]}
+          >
+            {row.before}
+          </td>
+          <td
+            class:list={[
+              "border-l border-green bg-green px-4 py-4 text-sm leading-relaxed text-cream/85 md:px-6 md:py-5",
+              index < lastRow && "border-b",
+            ]}
+          >
+            {row.after}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

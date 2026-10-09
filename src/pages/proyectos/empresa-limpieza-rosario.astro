@@ -5,6 +5,7 @@ import PageHeader from "../../components/PageHeader.astro";
 import Footer from "../../components/Footer.astro";
 import StickyCta from "../../components/StickyCta.astro";
 import CaseStudyGallery from "../../components/CaseStudyGallery.astro";
+import CaseContrast from "../../components/CaseContrast.astro";
 import Button from "../../components/ui/Button.astro";
 import { caseStudies } from "../../lib/content";
 
@@ -15,6 +16,10 @@ const cs = caseStudies.limpieza;
   <Header />
   <main id="contenido" class="flex-1" tabindex="-1">
 
+    <!-- Ficha del caso: la captura y las tecnologías ocupan la ventana menos el
+         header sticky (ver `.case-hero` en global.css). El título de arriba no
+         entra en esa cuenta. -->
+
     <!-- Page header -->
     <PageHeader
       eyebrow={cs.eyebrow}
@@ -22,11 +27,13 @@ const cs = caseStudies.limpieza;
       intro={`${cs.client} · ${cs.location}`}
     />
 
-    <CaseStudyGallery images={cs.gallery} />
+    <div class="case-hero" data-case-hero>
+
+    <CaseStudyGallery images={cs.gallery} class="case-hero__gallery" />
 
     <!-- Meta del proyecto -->
-    <section class="border-t border-green">
-      <div class="mx-auto max-w-6xl px-4 py-12 md:px-6">
+    <section class="case-hero__meta border-t border-green">
+      <div class="mx-auto max-w-6xl px-4 md:px-6">
         <div class="flex flex-wrap gap-6" data-reveal>
           <div class="flex flex-col gap-1">
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-green/75">
@@ -56,6 +63,8 @@ const cs = caseStudies.limpieza;
       </div>
     </section>
 
+    </div>
+
     <!-- El desafío -->
     <section class="border-t border-green">
       <div class="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
@@ -69,12 +78,19 @@ const cs = caseStudies.limpieza;
             >
               {cs.problem.title}
             </h2>
+            {cs.contrast && cs.problem.body[0] && (
+              <p class="mt-5 leading-relaxed text-green/80">{cs.problem.body[0]}</p>
+            )}
           </div>
-          <div class="flex flex-col gap-5" data-reveal style="transition-delay:60ms">
-            {cs.problem.body.map((paragraph) => (
-              <p class="leading-relaxed text-green/80">{paragraph}</p>
-            ))}
-          </div>
+          {cs.contrast ? (
+            <CaseContrast contrast={cs.contrast} />
+          ) : (
+            <div class="flex flex-col gap-5" data-reveal style="transition-delay:60ms">
+              {cs.problem.body.map((paragraph) => (
+                <p class="leading-relaxed text-green/80">{paragraph}</p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
