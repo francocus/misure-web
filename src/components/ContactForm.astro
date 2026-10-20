@@ -320,6 +320,31 @@ const { web3forms } = contactForm;
     const formStatusRegion = document.getElementById("contact-form-status");
     const modal = document.getElementById("contact-modal");
     const closeButton = document.getElementById("contact-modal-close");
+    let ultimoFocoSinTopLayer = null;
+
+    /* Fallback del dialog en navegadores sin showModal (sin top layer): el
+       foco escapa al fondo de la página y Escape no cierra solo. Trampa
+       mínima: foco en el botón de cierre, Tab vuelve al botón (único
+       enfocable del modal), Escape cierra y al cerrar el foco vuelve a donde
+       estaba. La rama con showModal delega en el top layer nativo, que ya
+       hace todo esto. */
+    const alTecladoFallback = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        cerrarModalSinTopLayer();
+      } else if (event.key === "Tab") {
+        event.preventDefault();
+        closeButton.focus();
+      }
+    };
+    const cerrarModalSinTopLayer = () => {
+      modal.removeAttribute("open");
+      document.removeEventListener("keydown", alTecladoFallback);
+      if (ultimoFocoSinTopLayer instanceof HTMLElement) {
+        ultimoFocoSinTopLayer.focus();
+      }
+      ultimoFocoSinTopLayer = null;
+    };
     const submitLabel = submitButton.textContent;
     const submittingLabel = submitButton.dataset.submittingLabel || submitLabel;
     const retryLabel = submitButton.dataset.retryLabel || submitLabel;
@@ -476,9 +501,8 @@ const { web3forms } = contactForm;
     closeButton.addEventListener("click", () => {
       if (typeof modal.showModal === "function" && modal.open) {
         modal.close();
-      } else {
-        modal.setAttribute("open", "");
-        modal.removeAttribute("open");
+      } else if (modal.open) {
+        cerrarModalSinTopLayer();
       }
     });
 
@@ -512,7 +536,11 @@ const { web3forms } = contactForm;
         if (typeof modal.showModal === "function") {
           modal.showModal();
         } else {
+          // Rama fallback: abrir con la trampa de foco (ver alTecladoFallback).
+          ultimoFocoSinTopLayer = document.activeElement;
           modal.setAttribute("open", "");
+          closeButton.focus();
+          document.addEventListener("keydown", alTecladoFallback);
         }
       } catch {
         failed = true;

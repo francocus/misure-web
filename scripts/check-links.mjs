@@ -20,7 +20,6 @@ async function* walk(dir) {
 // El dominio del sitio, sacado de los canonical del propio dist: si cambia,
 // este script sigue funcionando sin edición.
 async function siteHost() {
-  const first = (await walk(dist)).next();
   for await (const f of walk(dist)) {
     const html = await readFile(f, "utf8");
     const m = html.match(/rel="canonical" href="(https?:\/\/[^/]+)/);
