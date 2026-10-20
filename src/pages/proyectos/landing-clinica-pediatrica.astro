@@ -7,6 +7,7 @@ import StickyCta from "../../components/StickyCta.astro";
 import CaseStudyGallery from "../../components/CaseStudyGallery.astro";
 import CaseContrast from "../../components/CaseContrast.astro";
 import Button from "../../components/ui/Button.astro";
+import CaseNav from "../../components/CaseNav.astro";
 import { caseStudies } from "../../lib/content";
 
 const cs = caseStudies.pediatricLanding;
@@ -207,6 +208,7 @@ const cs = caseStudies.pediatricLanding;
           <span aria-hidden="true">←</span>
           <span class="link-ink inline-block">Ver todos los proyectos</span>
         </a>
+        <CaseNav current="pediatricLanding" />
       </div>
     </section>
 
