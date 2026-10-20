@@ -205,7 +205,7 @@ const faqSchema = {
     reserveFaqHeight();
     initFaqRows();
     initFaqHash();
-    document.fonts?.ready.then(reserveFaqHeight);
+    document.fonts?.ready.then(reserveFaqHeight).catch(() => {});
   };
 
   window.addEventListener("resize", onFaqResize);

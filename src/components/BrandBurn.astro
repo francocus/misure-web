@@ -658,11 +658,16 @@
           document.fonts ? document.fonts.ready : Promise.resolve(),
           new Promise((listo) => window.setTimeout(listo, 300)),
         ]);
-        fuenteALista.then(() => {
-          window.requestAnimationFrame(() =>
-            window.requestAnimationFrame(arrancar),
-          );
-        });
+        fuenteALista
+          .then(() => {
+            window.requestAnimationFrame(() =>
+              window.requestAnimationFrame(arrancar),
+            );
+          })
+          // Rechazo no manejado, igual que en Hero/BrandOpening/ScrollRail: la
+          // ceremonia arranca igual porque el race con el timeout de 300ms
+          // nunca rechaza en la práctica.
+          .catch(() => {});
       }
     }
   }
