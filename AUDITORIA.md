@@ -106,6 +106,19 @@ Sitio estático Astro 7.3.2 SSG + Tailwind 4.3.3 (vite), Node 24, deploy Vercel,
 - Verificación cruzada (FASE 3, `jd-judge-a`): 12 hallazgos revisados → 8 verificados, 2 falsos positivos, 1 falso positivo parcial (H3 a favor del segundo reporte), 1 con números corregidos (H9: 3/3, no 2/5).
 - Revisión crítica (FASE 4, `jd-judge-b`, 8 comandos, read-only): reclasificó F01 Alta→Media y F12 Baja→Info, subió F11 por la faceta legal (Web3Forms no declarado como procesador), confirmó el abuso del form (botcheck bypaseable con curl, sin CAPTCHA/rate-limit, sin exfil ni redirect abierto ni adjuntos) y descubrió **F24**: GA4 corriendo sin consentimiento contra la promesa textual de `content.ts:153-156` — lo más grave que quedó fuera de las fases 1-3.
 
+### 8.2 Ejecución de la tanda 2 (2026-10-20)
+
+| Hallazgo | Estado | Evidencia |
+| --- | --- | --- |
+| F21 script check | Resuelto | `93f45e2`: `"check": "astro check"` + `"links": "node scripts/check-links.mjs"` en package.json |
+| F14 CI | Resuelto | `93f45e2`: `.github/workflows/ci.yml` (push/PR a master): `npm ci` → check → build → `npm audit --omit=dev --audit-level=high` → links del dist. Sin pasos manuales: el repo se autogobierna |
+| F12 deps | Resuelto completo | `npm audit fix` en `93f45e2`: undici/devalue/http-cache-semantics/sharp/smol-toml/source-map-js/svgo arreglados — **0 vulnerabilidades** en `--omit=dev` (FASE 4 decía build-time; el fix las cerró todas) y el build se mantiene verde |
+| F13 .catch | Resuelto | `f20c3e5`: `.catch(() => {})` en la fuente de BrandBurn y el fonts.ready de Faq (patrón de Hero) |
+| F09 modal fallback | Resuelto | `87bf725`: trampa mínima en la rama sin top layer (foco en el botón de cierre, Tab vuelve al botón, Escape cierra y el foco vuelve a donde estaba); la rama showModal queda nativa |
+| F07 PNG muertos | Resuelto | `68ae1ac`: `<Image>` sin format dejaba la PNG master (hasta 761 KB) como src de fallback; con `format="webp"` en los 5 usos + paso post-build `scripts/saca-png-muertos.mjs` (dentro de `npm run build`) que saca del dist toda PNG de _astro sin referencias: dist/_astro 6.7M → **4.1M** (−2.55 MB), 6 PNG fuera, solo quedan los referenciados de la raíz |
+| F17 prev/next | Resuelto | `fd652d2`: componente `CaseNav.astro` (anterior/siguiente según el orden de `caseStudies`, sin wrap en los extremos) insertado en las 6 fichas junto al back-link; los 10 links nuevos resuelven (links del dist: 286 → 296 OK) |
+| F11 key | Mano del autor | Pendiente en el dashboard de Web3Forms (limitar por dominio); la declaración en la política ya estaba |
+
 ### 8.1 Ejecución de la tanda 1 (2026-10-20)
 
 | Hallazgo | Estado | Evidencia |
