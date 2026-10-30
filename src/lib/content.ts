@@ -50,7 +50,7 @@ export const cleanAnswer = (value: string) =>
   value.replace(/\[PENDIENTE:[^\]]*\]/g, "").trim();
 
 export const site = {
-  name: "bottega",
+  name: "deftcode",
   legalName: "BottegaDevs",
   url: "https://bottegadevs.com",
   announcement:
@@ -223,7 +223,7 @@ export const explore = {
   eyebrow: "Explorá",
   title: "¿Por dónde seguís?",
   description:
-    "Tres cosas concretas que podés hacer ahora para entender si bottega es lo que tu empresa necesita.",
+    "Tres cosas concretas que podés hacer ahora para entender si deftcode es lo que tu empresa necesita.",
   items: [
     {
       title: "Prototipo gratis antes de firmar",
@@ -257,7 +257,7 @@ export const about: {
   eyebrow: "Nuestra historia",
   body: [
     "Nos conocimos cursando en la facultad, armamos varios proyectos juntos durante la carrera, y un año antes de recibirnos decidimos dejar de hacerlo como practica y empezar a hacerlo como trabajo.",
-    "La idea de bottega nació de algo que veíamos todo el tiempo en pymes de la zona: un sistema genérico resuelve un problema puntual, pero deja sueltos todos los demás. Armamos este emprendimiento para ofrecer lo contrario: un solo sistema, construido a tu medida, que cubre el negocio completo.",
+    "La idea de deftcode nació de algo que veíamos todo el tiempo en pymes de la zona: un sistema genérico resuelve un problema puntual, pero deja sueltos todos los demás. Armamos este emprendimiento para ofrecer lo contrario: un solo sistema, construido a tu medida, que cubre el negocio completo.",
   ],
   highlights: ["un solo sistema, construido a tu medida"],
 };
@@ -479,7 +479,7 @@ export const clientQuote: {
   highlights: string[];
 } = {
   eyebrow: "Testimonio",
-  text: "Antes perdíamos horas llenando planillas a mano para saber quién había trabajado qué día en cada edificio, y encima las quejas por inasistencias eran un dolor de cabeza semana a semana. Con Bottega ahora todo se carga solo, y una tarea que antes le consumía gran parte de su jornada a un empleado, hoy se resuelve de forma automática. Para mí fue de las mejores decisiones que tomé en la empresa, ya que dejé de lidiar con problemas cotidianos y puse mi foco en hacer crecer el negocio.",
+  text: "Antes perdíamos horas llenando planillas a mano para saber quién había trabajado qué día en cada edificio, y encima las quejas por inasistencias eran un dolor de cabeza semana a semana. Con deftcode ahora todo se carga solo, y una tarea que antes le consumía gran parte de su jornada a un empleado, hoy se resuelve de forma automática. Para mí fue de las mejores decisiones que tomé en la empresa, ya que dejé de lidiar con problemas cotidianos y puse mi foco en hacer crecer el negocio.",
   author: "Paola Zorila",
   source: "AZ Servicios de Limpieza, Rosario",
   caseHref: "/proyectos/empresa-limpieza-rosario",
@@ -603,7 +603,7 @@ export const faqHeading: {
 
 export const faq: FaqItem[] = [
   {
-    question: "¿Qué servicios ofrece bottega?",
+    question: "¿Qué servicios ofrece deftcode?",
     answer:
       "Desarrollamos sistemas de gestión (ERP), herramientas de ventas (CRM) y páginas web a medida. Tres líneas que se combinan para cubrir la operación interna de tu empresa y cómo te mostrás al mundo.",
   },

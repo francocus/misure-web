@@ -1,5 +1,5 @@
 ---
-import { dictionaryEntry } from "../lib/content";
+import { site } from "../lib/content";
 import BrandSenses from "./BrandSenses.astro";
 
 // La apertura de marca: el wordmark a gran escala y centrado con su fonetica y
@@ -36,7 +36,7 @@ import BrandSenses from "./BrandSenses.astro";
           lleva `pointer-events: none` justamente para no interceptar nada con su
           caja, asi que el arrastre aterriza aca y la seleccion funciona. */}
       <span class="wordmark wordmark-hero" data-brand-wordmark
-        >{dictionaryEntry.word}</span
+        >{site.name}</span
       >
       {/* `mt-10` y no un margen corto: con line-height 1 la caja del wordmark corta
           la tinta, asi que el descendente de la "g" baja 2,5px por debajo de la

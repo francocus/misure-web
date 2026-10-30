@@ -7,6 +7,7 @@ import "../styles/fonts.css";
 // variante que realmente renderiza el texto del sitio).
 import pjsLatinWoff2 from "../assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2?url";
 import loraLatinWoff2 from "../assets/fonts/lora-latin-wght-normal.woff2?url";
+import royaleMilanoOtf from "../assets/fonts/royale-milano-demo-regular-italic.otf?url";
 import { ClientRouter } from "astro:transitions";
 // Analítica propia sin cookies (Vercel Web Analytics): el script vive en
 // /_vercel/insights/script.js y la plataforma lo inyecta en el deploy.
@@ -44,6 +45,8 @@ const pageUrl = new URL(pathname, siteOrigin).href;
 const canonical = canonicalProp ?? pageUrl;
 const ogUrl = ogUrlProp ?? pageUrl;
 
+const isHome = Astro.url.pathname === "/";
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -74,6 +77,9 @@ const organizationSchema = {
     <Analytics />
     <link rel="preload" as="font" type="font/woff2" crossorigin href={pjsLatinWoff2} />
     <link rel="preload" as="font" type="font/woff2" crossorigin href={loraLatinWoff2} />
+    {/* Royale Milano solo la usan BrandOpening y BrandBurn, ambas solo en la
+        home, a diferencia de las dos fuentes variables que hacen falta siempre. */}
+    {isHome && <link rel="preload" as="font" type="font/otf" crossorigin href={royaleMilanoOtf} />}
     <link rel="icon" type="image/svg+xml" href="/icono.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {canonical && <link rel="canonical" href={canonical} />}

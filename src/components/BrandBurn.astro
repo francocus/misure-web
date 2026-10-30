@@ -1,4 +1,6 @@
 ---
+import { site } from "../lib/content";
+
 // BrandBurn — el preload de la home: el estampado. La pantalla arranca cubierta
 // por la tinta (verde bottega liso), ese plato baja hasta la cara del taco, el
 // taco se levanta, golpea seco sobre el lino y se queda presionando mientras la
@@ -43,7 +45,7 @@
          El script solo la planta en la caja del wordmark del hero, así que el
          destape cae exactamente donde después vive la marca. -->
     <div class="tinta" data-tinta>
-      <span class="wordmark wordmark-hero">bottega</span>
+      <span class="wordmark wordmark-hero">{site.name}</span>
     </div>
 
     <!-- El taco: una tabla plana vista desde arriba (referencia del autor: un
